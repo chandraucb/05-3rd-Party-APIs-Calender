@@ -20,16 +20,28 @@ $(function () {
   // attribute of each time-block be used to do this?
   //
   // TODO: Add code to display the current date in the header of the page.
+
+
+  //function to append suffix to date based on the day
+  const nth = function(d) {
+    if (d > 3 && d < 21) return 'th';
+    switch (d % 10) {
+      case 1:  return "st";
+      case 2:  return "nd";
+      case 3:  return "rd";
+      default: return "th";
+    }
+  } 
+
+  //Set header date as current date
+  $('#currentDay').text(dayjs().format('dddd, MMMM D') + nth(dayjs().format('D')) )
+  
+
+  for (let index = 0; index < 8; index++) {
+    var nextHrElement = $('#hour-9').clone();
+    $('#container').append(nextHrElement[0])
+  }
+
+
 });
 
-const nth = function(d) {
-  if (d > 3 && d < 21) return 'th';
-  switch (d % 10) {
-    case 1:  return "st";
-    case 2:  return "nd";
-    case 3:  return "rd";
-    default: return "th";
-  }
-} 
-
-$('#currentDay').text(dayjs().format('dddd, MMMM D') + nth(dayjs().format('D')) )
