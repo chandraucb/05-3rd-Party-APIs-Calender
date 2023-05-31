@@ -35,9 +35,10 @@ $(function () {
   //Hours Time block
   let workingHours = [10, 11, 12, 1, 2, 3, 4, 5];
 
-  const currentDate = dayjs().hour(15)
+  //ADDED FOR TESTING VARIOUS TIME SETTING
+  //const currentDate = dayjs().hour(15)
 
-  //const currentDate = dayjs()
+  const currentDate = dayjs();
 
   // Loop to dynamically create hour block elements
   for (let index = 0; index < workingHours.length; index++) {
@@ -51,7 +52,6 @@ $(function () {
     //Set time block
     $($(nextHrElement).children(".col-2").first()[0]).text(hour);
 
-
     //Convert hour index to military for diff calculation
     console.log(hourIndex);
     if (hourIndex <= 5) hourIndex += 12;
@@ -59,11 +59,11 @@ $(function () {
     //Set css present, past, future based on current time
     let cssClass = "";
 
-    const blockTime = dayjs().hour(hourIndex)
+    const blockTime = dayjs().hour(hourIndex);
 
-    if ((blockTime.hour() - currentDate.hour()) < 0) {
+    if (blockTime.hour() - currentDate.hour() < 0) {
       cssClass = "past";
-    } else if ((blockTime.hour() - currentDate.hour()) === 0 ) {
+    } else if (blockTime.hour() - currentDate.hour() === 0) {
       cssClass = "present";
     } else {
       cssClass = "future";
@@ -76,11 +76,11 @@ $(function () {
   }
 
   //Update css present, past, future for first element (9-hour) time block
-  var blockTimeAt9 = dayjs().hour(9)
+  var blockTimeAt9 = dayjs().hour(9);
 
-  if ((blockTimeAt9.hour() - currentDate.hour()) === 0 )  {
+  if (blockTimeAt9.hour() - currentDate.hour() === 0) {
     $("#hour-9").removeClass("past").addClass("present");
-  } else if ((blockTimeAt9.hour() - currentDate.hour()) > 0) {
+  } else if (blockTimeAt9.hour() - currentDate.hour() > 0) {
     $("#hour-9").removeClass("past").addClass("future");
   }
 
