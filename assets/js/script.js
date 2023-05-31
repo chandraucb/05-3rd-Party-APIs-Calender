@@ -32,15 +32,25 @@ $(function () {
   // current hour in 24-hour time?
   //
 
-  //Hours Time block
-  let workingHours = [10, 11, 12, 1, 2, 3, 4, 5];
-
   //ADDED FOR TESTING VARIOUS TIME SETTING
   //const currentDate = dayjs().hour(15)
 
   const currentDate = dayjs();
 
-  // Loop to dynamically create hour block elements
+  //Update css present, past, future for first element (9-hour) time block
+  var blockTimeAt9 = dayjs().hour(9);
+  //Default element create as past time, update if future or present style applicable
+  if (blockTimeAt9.hour() - currentDate.hour() === 0) {
+    $("#hour-9").removeClass("past").addClass("present");
+  } else if (blockTimeAt9.hour() - currentDate.hour() > 0) {
+    $("#hour-9").removeClass("past").addClass("future");
+  }
+
+  //Hours Time block
+  let workingHours = [10, 11, 12, 1, 2, 3, 4, 5];
+
+  // Loop to dynamically to create hour block elements as clone first element and 
+  //append to the document with updated styles, time block and id
   for (let index = 0; index < workingHours.length; index++) {
     let nextHrElement = $("#hour-9").clone()[0];
     let hourIndex = workingHours[index];
@@ -73,15 +83,6 @@ $(function () {
 
     $(nextHrElement).removeClass("past").addClass(cssClass);
     $("#container").append(nextHrElement);
-  }
-
-  //Update css present, past, future for first element (9-hour) time block
-  var blockTimeAt9 = dayjs().hour(9);
-
-  if (blockTimeAt9.hour() - currentDate.hour() === 0) {
-    $("#hour-9").removeClass("past").addClass("present");
-  } else if (blockTimeAt9.hour() - currentDate.hour() > 0) {
-    $("#hour-9").removeClass("past").addClass("future");
   }
 
   // TODO: Add code to get any user input that was saved in localStorage and set
