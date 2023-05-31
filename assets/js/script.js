@@ -35,11 +35,37 @@ $(function () {
 
   //Set header date as current date
   $('#currentDay').text(dayjs().format('dddd, MMMM D') + nth(dayjs().format('D')) )
-  
 
-  for (let index = 0; index < 8; index++) {
-    var nextHrElement = $('#hour-9').clone();
-    $('#container').append(nextHrElement[0])
+  let workingHours = [10,11,12,1,2,3,4,5]
+
+  for (let index = 0; index < workingHours.length; index++) {
+    let nextHrElement = $('#hour-9').clone()[0];
+    let hourIndex=workingHours[index] ;
+    let id='hour-'+hourIndex;
+    let hour=(8 < hourIndex && hourIndex < 13) ? hourIndex+'AM': hourIndex+'PM'
+    $(nextHrElement).attr('id',id)
+    $($(nextHrElement).children('.col-2').first()[0]).text(hour)
+
+    let cssClass = '';
+    let currentHour = dayjs().format('H')
+    console.log (currentHour)
+    console.log (hourIndex)
+
+    if (hourIndex <= 5)
+      hourIndex += 12 
+
+    if (currentHour > hourIndex) {
+      cssClass = 'past'
+    } else if (currentHour == hourIndex) {
+      cssClass = 'present'
+    } else {
+      cssClass = 'future'
+    }
+
+    console.log (cssClass)
+
+    $(nextHrElement).removeClass('past').addClass(cssClass)
+    $('#container').append(nextHrElement)
   }
 
 
