@@ -32,11 +32,12 @@ $(function () {
   // current hour in 24-hour time?
   //
 
-  let currentHour = dayjs().format("H");
-  //let currentHour = 11
-
   //Hours Time block
   let workingHours = [10, 11, 12, 1, 2, 3, 4, 5];
+
+  const currentDate = dayjs().hour(15)
+
+  //const currentDate = dayjs()
 
   // Loop to dynamically create hour block elements
   for (let index = 0; index < workingHours.length; index++) {
@@ -60,9 +61,9 @@ $(function () {
 
     const blockTime = dayjs().hour(hourIndex)
 
-    if (blockTime.diff(dayjs(), "hours") < 0) {
+    if ((blockTime.hour() - currentDate.hour()) < 0) {
       cssClass = "past";
-    } else if (blockTime.diff(dayjs(), "hours") === 0 ) {
+    } else if ((blockTime.hour() - currentDate.hour()) === 0 ) {
       cssClass = "present";
     } else {
       cssClass = "future";
@@ -77,9 +78,9 @@ $(function () {
   //Update css present, past, future for first element (9-hour) time block
   var blockTimeAt9 = dayjs().hour(9)
 
-  if ( blockTimeAt9.diff(dayjs(), "hours") === 0 )  {
+  if ((blockTimeAt9.hour() - currentDate.hour()) === 0 )  {
     $("#hour-9").removeClass("past").addClass("present");
-  } else if (blockTimeAt9.diff(dayjs(), "hours") > 0) {
+  } else if ((blockTimeAt9.hour() - currentDate.hour()) > 0) {
     $("#hour-9").removeClass("past").addClass("future");
   }
 
